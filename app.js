@@ -34,8 +34,11 @@ var calculatorModule = (function() {
     saveMemory: function(){
       memory = parseFloat(total);
     },
-    recallMemory: function(){
+    getMemory: function(){
       return memory;
+    },
+    clearMemory: function(){
+      memory = "";
     }
   };
 }());
@@ -43,7 +46,6 @@ var calculatorModule = (function() {
 $(document).ready(function() {
   $(".btn").click(function(e) {
     var value = e.currentTarget.innerHTML;
-    console.log('value: ', value);
     var firstClick = "";
     var myCalc = calculatorModule;
     var operators = ["+", "-", "x", "÷"];
@@ -72,8 +74,17 @@ $(document).ready(function() {
       myCalc.load(value);
       firstClick = false;
     }
+
+    if (value === "CE"){
+      myCalc.clearTotal();
+    }
+
+    if (value === "AC"){
+      myCalc.clearTotal();
+      myCalc.clearMemory();
+    }
     if (firstClick){
-      $(".output").text(myCalc.recallMemory());
+      $(".output").text(myCalc.getMemory());
     } else {
       $(".output").text(myCalc.getTotal());
     }
