@@ -1,54 +1,12 @@
-var calculatorModule = (function() {
-  var memory = "";
-  var total = "";
-  var operator = "";
-
-  return {
-    load : function(num) {
-      total += num;
-    },
-    add: function(num){
-      total = memory + num;
-    },
-    subtract: function(num){
-      total = memory - num;
-    },
-    multiply: function(num){
-      total = memory * num;
-    },
-    divide: function(num){
-      total = memory/num;
-    },
-    saveOperator: function(val){
-      operator = val;
-    },
-    recallOperator: function(val){
-      return operator;
-    },
-    getTotal: function(){
-      return total;
-    },
-    clearTotal: function(){
-      total = "";
-    },
-    saveMemory: function(){
-      memory = parseFloat(total);
-    },
-    getMemory: function(){
-      return memory;
-    },
-    clearMemory: function(){
-      memory = "";
-    }
-  };
-}());
-
 $(document).ready(function() {
   $(".btn").click(function(e) {
+
     var value = e.currentTarget.innerHTML;
-    var firstClick = "";
     var myCalc = calculatorModule;
+    var firstClick = "";
     var operators = ["+", "-", "x", "÷"];
+
+    //Checks if number, operator, or equal is clicked
     if (operators.indexOf(value) > -1){
       myCalc.saveMemory()
       myCalc.saveOperator(value);
@@ -75,14 +33,18 @@ $(document).ready(function() {
       firstClick = false;
     }
 
+    // clears previous input
     if (value === "CE"){
       myCalc.clearTotal();
     }
 
+    // clears everything
     if (value === "AC"){
       myCalc.clearTotal();
       myCalc.clearMemory();
     }
+
+    // Helps show correct number(s) in ouput screen
     if (firstClick){
       $(".output").text(myCalc.getMemory());
     } else {
